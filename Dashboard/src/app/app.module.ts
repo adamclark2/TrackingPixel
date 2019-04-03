@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PixelDetailComponent } from './pixel-detail/pixel-detail.component';
+import { IndexComponent } from './index/index.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PixelDetailComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
