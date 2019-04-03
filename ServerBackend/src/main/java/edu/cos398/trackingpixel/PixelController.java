@@ -1,12 +1,18 @@
 package edu.cos398.trackingpixel;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Null;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.cos398.trackingpixel.DAO.PixelDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import edu.cos398.trackingpixel.Model.*;
@@ -26,13 +33,13 @@ public class PixelController {
     @Autowired
     private PixelDAO pixelDatabase;
 
-    @RequestMapping(path = "/pixels/{pixelID}", produces = "text/plain")
-    public String index(HttpServletRequest req, @PathVariable int pixelID, HttpServletResponse resp){
+    @RequestMapping(path = "/pixels/{pixelID}.png", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] index(HttpServletRequest req, @PathVariable int pixelID, HttpServletResponse resp){
         try{
             Pixel p = pixelDatabase.getPixelById(pixelID);
             if(p == null){
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                return "Pixel not found";
+                return generatePixel();
             }
 
             Map<String, String> headers = new HashMap<>();
@@ -56,7 +63,7 @@ public class PixelController {
             resp.addCookie(c);
 
             Gson g = new Gson();
-            return "(TODO) Pixel goes here:\n";
+            return generatePixel();
         } catch(Exception e){
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             PrintWriter pr = new PrintWriter(bos);
@@ -72,8 +79,9 @@ public class PixelController {
             }
             
 
-
-            return "An exception happened: \nMessage: " + e.getMessage() + "\nLocalized Message: " + e.getLocalizedMessage() + "\n\nStackTrace: \n" + s;
+            // TODO logging
+            // "An exception happened: \nMessage: " + e.getMessage() + "\nLocalized Message: " + e.getLocalizedMessage() + "\n\nStackTrace: \n" + s;
+            return generatePixel();
         }
     }
 
@@ -83,6 +91,27 @@ public class PixelController {
         List<PixelVisit> pv =  pixelDatabase.getPixelVisit(p);
 
         return pv;
+    }
+
+    public byte[] generatePixel(){
+        BufferedImage bi = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = bi.getGraphics();
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(0, 0, 400, 400);
+
+        g.setColor(Color.blue);
+        Font arial = new Font("Arial", Font.BOLD, 28);
+        g.setFont(arial);
+        g.drawChars("Tracking Pixel".toCharArray(),0, "Tracking Pixel".length(), 400/4, 400/2);
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(50000);
+        try{
+            ImageIO.write(bi, "png", bos);
+        }catch(Exception e){
+            return null;
+        }
+        
+        return bos.toByteArray();
     }
 
 }
