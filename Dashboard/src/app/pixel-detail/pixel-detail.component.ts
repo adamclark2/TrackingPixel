@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import Chart from 'chart.js';
 import { ActivatedRoute } from "@angular/router";
 
@@ -7,19 +7,26 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: './pixel-detail.component.html',
   styleUrls: ['./pixel-detail.component.css']
 })
-export class PixelDetailComponent implements OnInit {
+export class PixelDetailComponent implements OnInit, OnChanges {
 
   constructor(private route: ActivatedRoute) {}
 
   pixelID = -1
+  pixelExists = false
+  doCreatePixel = false
+
+  categories = ["Fun", "Awesome", "Cool"]
+
+  chart
+  myBarChart
+
   ngOnInit() {
     this.pixelID = this.route.snapshot.params['id']
-    let donut = document.getElementById("donut") as HTMLCanvasElement
-    let donutCtx = donut.getContext('2d');
+    this.pixelExists = this.pixelID == 1;
+    this.drawChart()
+  }
 
-    let bar = document.getElementById("bar") as HTMLCanvasElement
-    let barCtx = bar.getContext('2d');
-
+  drawChart(){
     var data = {
         labels: [
             "Value A","Value B"],
@@ -33,8 +40,8 @@ export class PixelDetailComponent implements OnInit {
             }]
     };
 
-    var chart = new Chart(
-        donutCtx,
+    this.chart = new Chart(
+        'donut',
         {
             "type": 'doughnut',
             "data": data,
@@ -57,7 +64,8 @@ export class PixelDetailComponent implements OnInit {
         },
       ]
     };
-    var myBarChart = new Chart(barCtx, {
+    
+    this.myBarChart = new Chart('bar', {
       "type": 'bar',
       "data": barData,
       options: {
@@ -71,6 +79,10 @@ export class PixelDetailComponent implements OnInit {
         }
       }
     });
+  }
+
+  btnCreate(){
+    this.doCreatePixel = true
   }
 
 }

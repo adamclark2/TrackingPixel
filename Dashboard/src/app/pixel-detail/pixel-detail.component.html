@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [hidden]="!pixelExists">
   <div class="bg-light container">
       <div class="row display-3">
           Pixel {{pixelID}}
@@ -31,6 +31,52 @@
         </div>
     </div>
   </div>
-  
 </div>
 
+<div class="container" [hidden]="pixelExists || doCreatePixel">
+  <div class="bg-light container">
+    <div class="row display-3">
+        Pixel {{pixelID}}
+      </div>
+      <div class="row">
+        This pixel doesn't exist. Create it?
+      </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="btn btn-outline-success" (click)="btnCreate()">Create new Pixel</div>
+  </div>
+</div>
+
+<div class="container" [hidden]="!doCreatePixel">
+  <div class="bg-light container">
+    <div class="row display-3">
+        Pixel {{pixelID}}
+      </div>
+      <div class="row">
+        Pixel creation
+      </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="row">
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <input type="text" class="form-control" id="category">
+            <div class="btn btn-success col-12">Add</div>
+
+            <div class="bt-5 pb-5"><!-- Spacer --></div>
+
+            <div *ngFor="let cat of categories; index as i;">
+                <div class="card bg-secondary text-white" >
+                    <div class="card-body">
+                      <button type="button" class="btn btn-outline-danger mr-1">X</button>
+                      {{cat}}
+                    </div>
+                  </div>
+            </div>
+              
+          </div>
+
+    </div>
+  </div>
+</div>
