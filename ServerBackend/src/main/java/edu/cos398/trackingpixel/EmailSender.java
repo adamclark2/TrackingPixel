@@ -57,9 +57,9 @@ public class EmailSender{
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(username));
+                InternetAddress.parse("<EMAIL GOES HERE>"));
             message.setSubject("Testing Subject 2");
-            message.setContent("<img src=\'http://localhost:8080/pixelEmailImage/100.png\'>", "text/html; charset=utf-8");
+            message.setContent("<img src=\'http://localhost:8080/pixels/100.png\'>", "text/html; charset=utf-8");
 
             Transport.send(message);
 
