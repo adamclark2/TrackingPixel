@@ -7,11 +7,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <body class="container">
-        <div class="row">
-            <div class="col-12 bg-success display-4">
-                <span class="">Tracking Pixel</span>
-            </div>
-
+        <div class="row bg-dark pb-2 pt-1 align-bottom">
+                <a href="index.html" class="col-lg-4 display-4 mr-5  align-text-bottom text-light border border-right-0 border-left-0">Tracking Pixel</a>
+                <a href="EmailCampaigns.html" class="mt-5 border-top-0 align-text-bottom col-lg-2 h6 mr-5 text-light border border-right-0 border-left-0">View Existing Email Campaigns</a>
+                <a href="createEmail.html" class="mt-5 border-top-0 align-text-bottom col-lg-2 h6 mr-5 text-light border border-right-0 border-left-0">Create New Email Campaign</a>
+                <a href="logout.html" class="mt-5 border-top-0 align-text-bottom h6 mr-5 text-danger border border-right-0 border-left-0">Logout</a>
         </div>
         <div class="row">
             Many application use web tecnnologies to track users activities. 
@@ -22,7 +22,7 @@
             
         </div>
         <div class="row pt-5 ">
-            <div id="login" class="col-lg-4 mx-auto ">
+            <div id="login" class="col-lg-5 mx-auto ">
                 <form class="">
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -33,6 +33,8 @@
                         <input type="password" class="form-control" id="password">
                     </div>
                     <button class="btn btn-success col-12" type="submit">Login</button>
+                    <div class="alert alert-danger"><strong>Auth Failure</strong> we couldn't verify your identity.</div>
+                    <div class="alert alert-danger"><strong>Locked</strong> Your ip address has had 1,000 bad logins. We have blocked you for 5 minutes.</div>
                 </form>
             </div>
         </div>
