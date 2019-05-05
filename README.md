@@ -1,9 +1,21 @@
 # TrackingPixel
 An implementation of Tracking Pixels to explore ethical implications (For a College class)
 
-# Todo 
+# application.properties
+this is a config file used by us and spring framework to get information. 
+Here are all the fields you need
 
-|||
-|----|----|----|
-|Tracking Pixel|When a users calls a GET they are tracked|YES|
-|Dashboard|Get meta for said pixel|Kinda|
+        # Send JSON that I can read
+        spring.gson.pretty-printing=true
+
+        # Email Settings
+        email.username=example@domain.com
+        email.password=**PASSWORD GOES HERE**
+        email.smtp=smtp.google.com
+        email.smtp.auth=true
+        email.smtp.starttls.enable=true
+        email.smtp.host=smtp.gmail.com
+        email.smtp.port=587
+
+# Deployment
+... Talk about how to deploy here ...

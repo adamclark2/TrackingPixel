@@ -194,3 +194,6 @@ typings/
 .history
 
 # End of https://www.gitignore.io/api/node,java,maven,macos,angular,visualstudiocode
+
+# Config file that might have a password
+application.properties
