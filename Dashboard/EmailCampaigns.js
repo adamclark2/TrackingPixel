@@ -7,8 +7,17 @@ function populateCampaigns(serverCamps){
     if(serverCamps.length > 0){
         camp[0].selected = true
         syncCampList()
+        document.getElementById("table-content").hidden = false
+        document.getElementById("camplist").hidden = false
         selectCamp(0)
+    }else {
+        alert("Create a campaign")
+        document.location.href = "createEmail.html"
     }
+}
+
+function btnRefresh(){
+    ec_loadCamps()
 }
 
 function selectCamp(idx){
