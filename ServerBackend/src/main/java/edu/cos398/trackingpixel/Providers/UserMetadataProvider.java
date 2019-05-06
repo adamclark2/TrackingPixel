@@ -68,7 +68,7 @@ private String[] knownISP = {"time warner", "comcast", "sprint", "att", "at&t", 
                 }
 
                 if (usableHostName.toLowerCase().contains("cs.usm.maine.edu")) {
-                    location = "USM Computer Scicent Lab";
+                    location = "USM Computer Science Lab";
                     isp = "University of Maine System (USM is its own isp)";
                 } else if (usableHostName.toLowerCase().contains("usm.maine.edu")) {
                     location = "USM";

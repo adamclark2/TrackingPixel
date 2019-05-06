@@ -7,7 +7,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class InMemoryPixelDAO implements PixelDAO {
 
     private List<Pixel> pixels = new ArrayList<>();
@@ -23,11 +22,6 @@ public class InMemoryPixelDAO implements PixelDAO {
         }
 
         return null;
-    }
-
-    @Override
-    public List<PixelVisit> getAllPixelVisits(){
-        return visits;
     }
 
     @Override

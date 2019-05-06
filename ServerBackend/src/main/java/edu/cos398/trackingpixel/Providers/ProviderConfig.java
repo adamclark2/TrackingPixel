@@ -40,6 +40,21 @@ public class ProviderConfig{
     @Autowired
     private PixelProvider pixelProvider;
 
+    @Value("${db.use-mock}")
+    private String useMockDB;
+
+    @Value("${db.schema}")
+    private String mysql_schema;
+
+    @Value("${db.mysql.url}")
+    private String mysql_url
+    ;
+    @Value("${db.mysql.username}")
+    private String mysql_username;
+
+    @Value("${db.mysql.password}")
+    private String mysql_password;
+
 
     public ProviderConfig(){
     }
@@ -64,4 +79,34 @@ public class ProviderConfig{
             );
         }
     }
+
+    @Bean
+    public AuthDAO getAuth(){
+        if(Boolean.parseBoolean(useMockDB)){
+            return new MockAuthDAO();
+        }else{
+            try{
+                return new MySQLAuthDAO(mysql_url, mysql_schema, mysql_username, mysql_password);
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    @Bean
+    public PixelDAO getPixelDAO(){
+        if(Boolean.parseBoolean(useMockDB)){
+            return new InMemoryPixelDAO();
+        }else{
+            try{
+                return new MySQLPixelDAO(mysql_url, mysql_schema, mysql_username, mysql_password);
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+
 }

@@ -27,6 +27,10 @@ public class PixelVisit{
         this.pixel = p;
     }
 
+    public long getTimestamp(){
+        return this.timestamp;
+    }
+
     public Pixel getPixel(){
         return pixel;
     }

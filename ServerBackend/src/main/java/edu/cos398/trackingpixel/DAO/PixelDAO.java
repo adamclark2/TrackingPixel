@@ -6,7 +6,6 @@ import java.util.*;
 public interface PixelDAO{
     public Pixel getPixelById(int id);
     public Set<String> getAllCampaigns();
-    public List<PixelVisit> getAllPixelVisits();
 
     public List<PixelVisit> getPixelVisit(Pixel p);
     public List<Pixel> getPixelsInCampaign(String campaign);

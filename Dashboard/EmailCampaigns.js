@@ -27,10 +27,23 @@ function selectCamp(idx){
     camp[idx].selected = true;
     document.getElementById("campaign_name").innerText = camp[idx].name;
 
+    document.getElementById("loading").hidden = false;
+    document.getElementById('camplist').hidden = true;
+
     syncCampList()
     removeTableItems()
-    getPixelsWithoutVisitsForCampaign(populateNotVisited, camp[idx].name)
-    getVisitsForCampaign(populateTable, camp[idx].name)
+
+    const campName = camp[camp_idx].name;
+    getPixelsWithoutVisitsForCampaign(function(name){
+        populateNotVisited(name);
+        getVisitsForCampaign(function(input){
+            populateTable(input)
+            document.getElementById("loading").hidden = true;
+            document.getElementById('camplist').hidden = false;
+
+        }, campName)
+    }
+    , campName)
     
 }
 
