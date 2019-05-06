@@ -34,7 +34,7 @@ function syncEmailField() {
             removeEmail(idx)
         })
         span.innerText = "" + emails[email]
-        div.className = "alert alert-success"
+        div.className = "alert alert-info"
 
         div.appendChild(btn)
         div.appendChild(span)
@@ -48,6 +48,9 @@ function btnSend(){
         return;
     }
 
+    document.getElementById("loading").hidden = false;
+    document.getElementById("user-input").hidden = true;
+
     campReq = {
         to: emails,
         content: document.getElementById("content").value,
@@ -55,6 +58,8 @@ function btnSend(){
     }
     
     createCampaign(function() {
-        alert("Success");
+        document.getElementById("loading").hidden = true;
+        document.getElementById("user-input").hidden = false;
+        alert("Success!");
     },campReq);
 }

@@ -80,3 +80,33 @@ function getAllCampaigns(onServerResponse){
     req.withCredentials = true
     req.send(); 
 }
+
+function getVisitsForCampaign(onServerResponse, campID){
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            onServerResponse(this.response)
+        }
+    };
+    req.open("GET", serverRoot + "/campaigns/visited/" + campID, true);
+    req.responseType = "json"
+    req.withCredentials = true
+    req.send(); 
+}
+
+function getPixelsWithoutVisitsForCampaign(onServerResponse, campID){
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            onServerResponse(this.response)
+        }
+    };
+    req.open("GET", serverRoot + "/campaigns/not-visited/" + campID, true);
+    req.responseType = "json"
+    req.withCredentials = true
+    req.send(); 
+}
+
+function getPixelAddress(pixel) {
+    return serverRoot + "/pixels/" + pixel.id + ".png";
+}

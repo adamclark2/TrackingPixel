@@ -16,48 +16,64 @@
                     <a href="createEmail.html" class="mt-5 border-top-0 align-text-bottom col-lg-2 h6 mr-5 text-light border border-right-0 border-left-0">Create New Email Campaign</a>
                     <a href="logout.html" class="mt-5 border-top-0 align-text-bottom h6 mr-5 text-danger border border-right-0 border-left-0">Logout</a>
             </div>
-        <div class="row">
-            <div class="form-group col-12">
-                <label for="campaign">Email Campaign Name:</label>
-                <input type="text" class="form-control" id="campaign">
-            </div>
+
+        <div class="" id="loading" hidden>
+            <span class="display-4">Loading...</span>
+            <br>
+            <div class="spinner-border text-muted"></div>
+            <div class="spinner-border text-primary"></div>
+            <div class="spinner-border text-success"></div>
+            <div class="spinner-border text-info"></div>
+            <div class="spinner-border text-warning"></div>
+            <div class="spinner-border text-danger"></div>
+            <div class="spinner-border text-secondary"></div>
+            <div class="spinner-border text-dark"></div>
+            <div class="spinner-border text-light"></div>
         </div>
 
-        <div class="row pt-5">
-            <div class="col-6">
-                <span>Emails</span>
+        <div id="user-input">
+            <div class="row">
                 <div class="form-group col-12">
-                    <label for="email">Add email:</label>
-                    <input type="email" class="form-control" id="email">
-                    <div class="btn btn-success col-12" onclick="addEmail()">Add Email</div>
+                    <label for="campaign">Email Campaign Name:</label>
+                    <input type="text" class="form-control" id="campaign">
                 </div>
-
-                <div class="" id="email-list">                    
-                </div>
-
             </div>
 
+            <div class="row pt-5">
+                <div class="col-6">
+                    <span>Emails</span>
+                    <div class="form-group col-12">
+                        <input type="email" class="form-control" id="email" placeholder="Email Address:">
+                        <div class="btn btn-dark col-12" onclick="addEmail()">Add Email</div>
+                    </div>
+
+                    <div class="" id="email-list">                    
+                    </div>
+
+                </div>
 
 
-            <div class="col-6">
-                <span>Email Content</span>
-                <div class="form-group">
+
+                <div class="col-6">
+                    <span>Email Content</span>
+                    <div class="form-group">
 
 <textarea class="form-control" rows="5" id="content">
 This email will attempt to get your user-agent and ip address.
 </br>
 Using your ip will will get your location.
 </textarea>
-                </div>
-                </br>
-                <div class="alert alert-success">
-                    <strong>Note:</strong> Tracking pixel will be added to the end of the email
-                </div>
-                <div class="alert alert-info">
-                    <strong>Note:</strong> You can use html tags in email content
+                    </div>
+                    </br>
+                    <div class="alert alert-dark">
+                        <strong>Note:</strong> Tracking pixel will be added to the end of the email
+                    </div>
+                    <div class="alert alert-dark">
+                        <strong>Note:</strong> You can use html tags in email content
+                    </div>
                 </div>
             </div>
+            <div class="col-12 btn btn-dark mx-auto mt-2" onclick="btnSend()">Send</div>
         </div>
-        <div class="col-12 btn btn-success" onclick="btnSend()">Send</div>
     </body>
 </html>

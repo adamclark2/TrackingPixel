@@ -28,89 +28,70 @@ function selectCamp(idx){
     document.getElementById("campaign_name").innerText = camp[idx].name;
 
     syncCampList()
-    populateTable()
+    removeTableItems()
+    getPixelsWithoutVisitsForCampaign(populateNotVisited, camp[idx].name)
+    getVisitsForCampaign(populateTable, camp[idx].name)
+    
 }
 
-function populateTable(){
+function removeTableItems(){
     table = document.getElementById('table-content');
     while (table.hasChildNodes()) {
         table.removeChild(table.childNodes[0]);
     }
+}
 
-    // Debug
-    visits = [
-        {
-            "headers": {
-                "cookie": "HasVisited=True; JSESSIONID=A7527E59F04629EF1234E56F80AB30AC",
-                "postman-token": "bfd7f88b-4743-47a7-9fc4-66eda3a1b7d1",
-                "host": "localhost:8080",
-                "connection": "keep-alive",
-                "cache-control": "no-cache",
-                "accept-encoding": "gzip, deflate",
-                "user-agent": "PostmanRuntime/7.11.0",
-                "accept": "*/*"
-            },
-            "cookies": {
-                "HasVisited": "True",
-                "JSESSIONID": "A7527E59F04629EF1234E56F80AB30AC"
-            },
-            "timestamp": 1557104404136,
-            "pixel": {
-                "id": 13,
-                "email": "adam.clark2@maine.edu",
-                "campaign": "aaaa"
-            }
-        },
-        {
-            "headers": {
-                "cookie": "HasVisited=True; JSESSIONID=A7527E59F04629EF1234E56F80AB30AC",
-                "postman-token": "bfd7f88b-4743-47a7-9fc4-66eda3a1b7d1",
-                "host": "localhost:8080",
-                "connection": "keep-alive",
-                "cache-control": "no-cache",
-                "accept-encoding": "gzip, deflate",
-                "user-agent": "PostmanRuntime/7.11.0",
-                "accept": "*/*"
-            },
-            "cookies": {
-                "HasVisited": "True",
-                "JSESSIONID": "A7527E59F04629EF1234E56F80AB30AC"
-            },
-            "timestamp": 1557104404136,
-            "pixel": {
-                "id": 13,
-                "email": "adam.clark2@maine.edu",
-                "campaign": "aaaa"
-            }
-        },
-        {
-            "headers": {
-                "cookie": "HasVisited=True; JSESSIONID=A7527E59F04629EF1234E56F80AB30AC",
-                "postman-token": "bfd7f88b-4743-47a7-9fc4-66eda3a1b7d1",
-                "host": "localhost:8080",
-                "connection": "keep-alive",
-                "cache-control": "no-cache",
-                "accept-encoding": "gzip, deflate",
-                "user-agent": "PostmanRuntime/7.11.0",
-                "accept": "*/*"
-            },
-            "cookies": {
-                "HasVisited": "True",
-                "JSESSIONID": "A7527E59F04629EF1234E56F80AB30AC"
-            },
-            "timestamp": 1557107506865,
-            "pixel": {
-                "id": 13,
-                "email": "adam.clark2@maine.edu",
-                "campaign": "aaaa"
-            }
-        }
-    ];
+function populateNotVisited(pixels){
+    table = document.getElementById('table-content');
+    for(visit_idx in pixels){
+        tr = document.createElement("tr");
+        email_td = document.createElement("td");
 
+        a = document.createElement("a")
+        a.href = getPixelAddress(pixels[visit_idx])
+        a.innerText = pixels[visit_idx].email;
+        email_td.appendChild(a);
+
+        hasvisited_td = document.createElement("td");
+        hasvisited_td.innerText = "NO";
+
+        date_td = document.createElement("td");
+        date_td.innerText = ""
+
+        OS_td = document.createElement("td");
+        OS_td.innerText = ""
+
+        browser_td = document.createElement("td");
+        browser_td.innerText = ""
+
+        loc_td = document.createElement("td");
+        loc_td.innerText = ""
+
+        isp_td = document.createElement("td");
+        isp_td.innerText =  ""
+
+        tr.appendChild(email_td)
+        tr.appendChild(hasvisited_td)
+        tr.appendChild(date_td)
+        tr.appendChild(OS_td)
+        tr.appendChild(browser_td)
+        tr.appendChild(loc_td)
+        tr.appendChild(isp_td)
+
+        table.appendChild(tr)
+    }
+}
+
+function populateTable(visits){
+    table = document.getElementById('table-content');
     for(visit_idx in visits){
         tr = document.createElement("tr");
         email_td = document.createElement("td");
-        email_td.innerText = visits[visit_idx].pixel.email;
+
+        a = document.createElement("a")
+        a.href = getPixelAddress(visits[visit_idx].pixel)
+        a.innerText = visits[visit_idx].pixel.email;
+        email_td.appendChild(a);
 
         hasvisited_td = document.createElement("td");
         hasvisited_td.innerText = "Yes";
@@ -119,16 +100,16 @@ function populateTable(){
         date_td.innerText = getDate(visits[visit_idx].timestamp);
 
         OS_td = document.createElement("td");
-        OS_td.innerText = "Unknown OS"
+        OS_td.innerText = visits[visit_idx].metadata.OS
 
         browser_td = document.createElement("td");
-        browser_td.innerText = "Unknown Browser"
+        browser_td.innerText = visits[visit_idx].metadata.browser
 
         loc_td = document.createElement("td");
-        loc_td.innerText = "Unknown Location"
+        loc_td.innerText = visits[visit_idx].metadata.location
 
         isp_td = document.createElement("td");
-        isp_td.innerText =  "Unknown ISP"
+        isp_td.innerText =  visits[visit_idx].metadata.isp
 
         tr.appendChild(email_td)
         tr.appendChild(hasvisited_td)

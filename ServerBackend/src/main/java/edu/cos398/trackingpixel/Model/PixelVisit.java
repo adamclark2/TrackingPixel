@@ -17,6 +17,9 @@ public class PixelVisit{
     @Expose
     private Pixel pixel;
 
+    @Expose
+    private UserMetadata metadata;
+
     public PixelVisit(){}
     public PixelVisit(Map<String, String> headers, Map<String, String> cookies, Pixel p){
         this.headers = headers;
@@ -26,5 +29,9 @@ public class PixelVisit{
 
     public Pixel getPixel(){
         return pixel;
+    }
+
+    public void setUserMetadata(UserMetadata metadata){
+        this.metadata = metadata;
     }
 }

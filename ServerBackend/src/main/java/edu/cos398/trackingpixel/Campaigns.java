@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.cos398.trackingpixel.Providers.*;
 
 import edu.cos398.trackingpixel.DAO.*;
+import edu.cos398.trackingpixel.Model.Pixel;
 import edu.cos398.trackingpixel.Model.PixelVisit;
 
 @RestController
@@ -36,7 +37,7 @@ public class Campaigns {
         return dao.getAllCampaigns();
     }
 
-    @RequestMapping(value = "/campaigns/{campID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/campaigns/visited/{campID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PixelVisit> getVisits(@PathVariable String campID, HttpServletRequest req, HttpServletResponse resp){
         if(!ap.isLoggedIn(req.getSession(true))){
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -44,5 +45,15 @@ public class Campaigns {
         }
 
         return pixelProvider.getPixelVisitsForEmail(campID);
+    }
+
+    @RequestMapping(value = "/campaigns/not-visited/{campID}", method = RequestMethod.GET)
+    public List<Pixel> getNonVisitedPixels(@PathVariable String campID, HttpServletRequest req, HttpServletResponse resp){
+        if(!ap.isLoggedIn(req.getSession(true))){
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+        return pixelProvider.getPixelsWithoutVisits(campID);
     }
 }   

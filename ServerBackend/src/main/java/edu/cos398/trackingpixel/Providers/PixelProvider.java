@@ -34,4 +34,19 @@ public class PixelProvider {
 
         return pv;
     }
+
+    public List<Pixel> getPixelsWithoutVisits(String campaign){
+        List<Pixel> pixels = dao.getPixelsInCampaign(campaign);
+        List<PixelVisit> pv = null;
+        List<Pixel> retVal = new ArrayList<>();
+
+        for(Pixel p : pixels){
+            pv = dao.getPixelVisit(p);
+            if(pv == null || pv.size() == 0){
+                retVal.add(p);
+            }
+        }
+
+        return retVal;
+    }
 }

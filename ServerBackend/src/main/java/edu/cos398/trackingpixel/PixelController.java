@@ -26,12 +26,16 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import edu.cos398.trackingpixel.Model.*;
+import edu.cos398.trackingpixel.Providers.UserMetadataProvider;
 
 @RestController
 public class PixelController {
 
     @Autowired
     private PixelDAO pixelDatabase;
+
+    @Autowired
+    private UserMetadataProvider ump;
 
     @RequestMapping(path = "/pixels/{pixelID}.png", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] index(HttpServletRequest req, @PathVariable int pixelID, HttpServletResponse resp)throws Exception {
@@ -55,7 +59,23 @@ public class PixelController {
             }
         }
 
+        String useragent = headers.get("user-agent");
+        if(useragent == null || useragent == ""){
+            useragent = headers.get("User-Agent");
+            if(useragent == null || useragent == ""){
+                useragent = headers.get("UserAgent");
+                if(useragent == null || useragent == ""){
+                    useragent = headers.get("useragent");
+                }
+            }
+        }
+
+        String ipAddress = req.getHeader("X-FORWARDED-FOR");  
+        if (ipAddress == null) {  
+          ipAddress = req.getRemoteAddr();  
+        }
         PixelVisit pv = new PixelVisit(headers, cookies, p);
+        pv.setUserMetadata(ump.getUserMetadata(useragent, ipAddress));
         pixelDatabase.addPixelVisit(pv);
 
         Cookie c = new Cookie("HasVisited", "True");
