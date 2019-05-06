@@ -44,6 +44,8 @@ Here are all the fields you need
     - Add the example above to simply start the app
     - You may need to create the file
 1. Edit the file `Dashboard/script.js`
+    - `serverRoot = "http://localhost:8080"`
+    - Set serverRoot to the address of the REST api. On localhost it's `"http://localhost:8080"`
 1. CD into ServerBackend on the command line
 1. Run the command `mvn clean`
 1. Run the command `mvn package`
@@ -54,4 +56,6 @@ Here are all the fields you need
 1. You can fill in any username and password if you aren't using a database as long as it's not the empty string
 
 # Database & Email
-Modify the `application.properties` to connect to a database and-or email.  
+Modify the `application.properties` to connect to a database and-or email. 
+
+See `database.sql` for SQL to init the database. 
