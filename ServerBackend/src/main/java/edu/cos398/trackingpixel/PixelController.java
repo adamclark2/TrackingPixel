@@ -34,55 +34,34 @@ public class PixelController {
     private PixelDAO pixelDatabase;
 
     @RequestMapping(path = "/pixels/{pixelID}.png", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] index(HttpServletRequest req, @PathVariable int pixelID, HttpServletResponse resp){
-        try{
-            Pixel p = pixelDatabase.getPixelById(pixelID);
-            if(p == null){
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                return generatePixel();
-            }
-
-            Map<String, String> headers = new HashMap<>();
-            Iterator <String> i = req.getHeaderNames().asIterator();
-            while(i.hasNext()){
-                String header = i.next();
-                headers.put(header, req.getHeader(header));
-            }
-
-            Map<String, String> cookies = new HashMap<>();
-            if(req.getCookies() != null){
-                for(Cookie c : req.getCookies()){
-                    cookies.put(c.getName(), c.getValue());
-                }
-            }
-
-            PixelVisit pv = new PixelVisit(headers, cookies, p);
-            pixelDatabase.addPixelVisit(pv);
-
-            Cookie c = new Cookie("HasVisited", "True");
-            resp.addCookie(c);
-
-            Gson g = new Gson();
-            return generatePixel();
-        } catch(Exception e){
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            PrintWriter pr = new PrintWriter(bos);
-            e.printStackTrace(pr);
-            pr.flush();
-
-            String s = bos.toString();
-            try{
-                pr.close();
-                bos.close();
-            }catch (Exception ee){
-                s += "\n\n An error occured while closing the print writer!\n";
-            }
-            
-
-            // TODO logging
-            // "An exception happened: \nMessage: " + e.getMessage() + "\nLocalized Message: " + e.getLocalizedMessage() + "\n\nStackTrace: \n" + s;
+    public byte[] index(HttpServletRequest req, @PathVariable int pixelID, HttpServletResponse resp)throws Exception {
+        Pixel p = pixelDatabase.getPixelById(pixelID);
+        if(p == null){
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return generatePixel();
         }
+
+        Map<String, String> headers = new HashMap<>();
+        Iterator <String> i = req.getHeaderNames().asIterator();
+        while(i.hasNext()){
+            String header = i.next();
+            headers.put(header, req.getHeader(header));
+        }
+
+        Map<String, String> cookies = new HashMap<>();
+        if(req.getCookies() != null){
+            for(Cookie c : req.getCookies()){
+                cookies.put(c.getName(), c.getValue());
+            }
+        }
+
+        PixelVisit pv = new PixelVisit(headers, cookies, p);
+        pixelDatabase.addPixelVisit(pv);
+
+        Cookie c = new Cookie("HasVisited", "True");
+        resp.addCookie(c);
+
+        return generatePixel();
     }
 
     @RequestMapping(path = "/pixelInfo/{pixelID}", produces = "application/json")

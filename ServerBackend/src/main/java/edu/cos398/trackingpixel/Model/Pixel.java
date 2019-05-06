@@ -9,27 +9,28 @@ public class Pixel{
     private int id;
 
     @Expose
-    private List<String> categories = new ArrayList<>();
+    private String email;
+
+    @Expose
+    private String campaign;
+
 
     public int getId(){
         return id;
     }
 
-    public void setId(int id){
-        this.id = id;
+    public String getEmail(){
+        return this.email;
     }
 
-    public List<String> getCategories(){
-        return this.categories;
-    }
-
-    public void addCategory(String categoryName){
-        this.categories.add(categoryName);
+    public String getCampaign(){
+        return campaign;
     }
 
     public Pixel(){}
-    public Pixel(int id, List<String> categories){
+    public Pixel(int id, String email, String campaign){
         this.id = id;
-        this.categories = categories;
+        this.email = email;
+        this.campaign = campaign;
     }
 }

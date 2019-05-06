@@ -12,6 +12,9 @@ public class PixelVisit{
     private Map<String, String> cookies = new HashMap<>();
 
     @Expose
+    private long timestamp = System.currentTimeMillis();
+
+    @Expose
     private Pixel pixel;
 
     public PixelVisit(){}

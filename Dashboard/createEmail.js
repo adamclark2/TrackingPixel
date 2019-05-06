@@ -45,5 +45,16 @@ function syncEmailField() {
 function btnSend(){
     if(emailCount <= 0){
         alert("Add at least one email")
+        return;
     }
+
+    campReq = {
+        to: emails,
+        content: document.getElementById("content").value,
+        subject: document.getElementById("campaign").value
+    }
+    
+    createCampaign(function() {
+        alert("Success");
+    },campReq);
 }

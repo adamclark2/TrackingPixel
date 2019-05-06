@@ -54,3 +54,16 @@ function logout(onServerResponse){
     req.withCredentials = true
     req.send();
 }
+
+function createCampaign(onServerResponse, campaignRequest){
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            onServerResponse()
+        }
+    };
+    req.open("POST", serverRoot + "/emailSender", true);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.withCredentials = true
+    req.send(JSON.stringify(campaignRequest));
+}

@@ -12,6 +12,7 @@ public class InMemoryPixelDAO implements PixelDAO {
 
     private List<Pixel> pixels = new ArrayList<>();
     private List<PixelVisit> visits = new ArrayList<>();
+    private Integer maxId = 10;
 
     @Override
     public Pixel getPixelById(int id){
@@ -30,13 +31,6 @@ public class InMemoryPixelDAO implements PixelDAO {
     }
 
     @Override
-    public void addPixel(Pixel p){
-        synchronized(pixels){
-            pixels.add(p);
-        }
-    }
-
-    @Override
     public void addPixelVisit(PixelVisit p){
         synchronized(visits){
             visits.add(p);
@@ -44,8 +38,6 @@ public class InMemoryPixelDAO implements PixelDAO {
     }
 
     public InMemoryPixelDAO(){
-        String[] cat = {"Awesome", "Cool", "Wow"};
-        pixels.add(new Pixel(0, Arrays.asList(cat)));
     }
 
     public List<PixelVisit> getPixelVisit(Pixel p){
@@ -59,5 +51,37 @@ public class InMemoryPixelDAO implements PixelDAO {
         }
 
         return retVal;
+    }
+
+    public List<Pixel> getPixelsInCampaign(String campaign){
+        List<Pixel> ret = new ArrayList<Pixel>();
+        for(Pixel p : pixels){
+            if(p.getCampaign().equals(campaign)){
+                ret.add(p);
+            }
+        }
+        return ret;
+    }
+
+    public Set<String> getAllCampaigns(){
+        Map<String, String> camps = new HashMap<>();
+        for(Pixel p : pixels){
+            if(!camps.containsKey(p.getCampaign())){
+                camps.put(p.getCampaign(), "");
+            }
+        }
+
+        return camps.keySet();
+    }
+
+    public Pixel createPixel(String email, String campaign) {
+        Pixel p;
+        synchronized (maxId){
+            maxId++;
+            p = new Pixel(maxId, email, campaign);
+            pixels.add(p);
+        }
+
+        return p;
     }
 }
