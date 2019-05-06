@@ -67,3 +67,16 @@ function createCampaign(onServerResponse, campaignRequest){
     req.withCredentials = true
     req.send(JSON.stringify(campaignRequest));
 }
+
+function getAllCampaigns(onServerResponse){
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            onServerResponse(this.response)
+        }
+    };
+    req.open("GET", serverRoot + "/campaigns", true);
+    req.responseType = "json"
+    req.withCredentials = true
+    req.send(); 
+}
