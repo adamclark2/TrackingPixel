@@ -11,8 +11,6 @@ public class MySQLAuthDAO implements AuthDAO{
     private String schema;
 
     public MySQLAuthDAO(String mysql_url, String schema, String mysql_username, String mysql_pass) throws Exception{
-        Class.forName("com.mysql.jdbc.Driver"); 
-
         this.schema = schema;
         this.mysql_pass = mysql_pass;
         this.mysql_username = mysql_username;
